@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gupter:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+#loader {
+	padding: 5rem;
+	text-align: center;
+}
+#header{
+	background:#8395ed;
+	padding:0.5rem;
+	font-family: "Gupter", serif;
+	display:flex;
+	justify-content: space-between;
+	    align-items: center;
+	ul{
+		list-style:none;
+		display:flex;
+		gap:5px;
+		li a{
+			text-decoration: none;
+            font-size: 1.1rem;
+            border: 1px solid transparent;
+            border-radius:5px;
+            padding: 0.1rem;
+		}
+	}
+
+}
+#home{
+	display:flex;
+	flex-direction:column;
+	justify-content: space-between;
+
+	#intro{
+	padding:1rem;
+		margin-top:1rem;
+		margin-bottom:1.5rem;
+		display:flex;
+		align-items:center;
+		p{
+			font-family: "Merriweather", serif;
+			margin-top:0.5rem;
+		}
+		img{
+			width:50%;
+		}
+	}
+}
+#main {
+	height: calc(100vh - 3rem);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	
+}
+
+#postbox {
+	height: 100%;
+	overflow: auto;
+	box-shadow:0px 1px 2px 0px #e1d9d9;
+
+	.posts {
+		padding: 1rem;
+		margin: 1rem;
+		box-shadow: 0px 0px 3px 2px #c5c1c173;
+
+		#name {
+			font-family: "Merriweather", serif;
+			font-size: 1.1rem;
+
+			&::first-letter {
+				text-transform: uppercase;
+			}
+
+		}
+
+		#date {
+			color: #756f6f;
+		}
+
+		#post {
+			font-family: "Gupter", serif;
+			font-size: 1.3rem;
+			margin-top: 0.5rem;
+
+			&::first-letter {
+				text-transform: uppercase;
+			}
+
+		}
+
+		.avatar {
+			display: flex;
+			gap: 10px;
+
+			#avatar {
+				width: 5%;
+				aspect-ratio: 1;
+			}
+
+		}
+
+	}
+
+}
+
+#box {
+	width: 100%;
+	background: #8395ed;
+	margin-top: 1rem;
+
+	form {
+		width: 95%;
+		margin: auto;
+		padding: 0.5rem;
+		display: flex;
+		gap: 5px;
+
+		textarea,
+		input {
+			padding: 0.3rem;
+			border: 0.5px solid #673AB7;
+			font-family: "Merriweather", serif;
+
+			&:focus {
+				outline: 0;
+				box-shadow: 0px 0px 2px 1px #673AB7;
+			}
+
+		}
+
+		textarea {
+			resize: none;
+			width: 100%;
+		}
+
+		button {
+			all: unset;
+			padding: 0 1rem;
+			border: 1px solid #673AB7;
+			cursor: pointer;
+			transition: all 0.3s;
+
+			&:hover {
+				background: #673AB7;
+
+				svg {
+					color: white;
+				}
+
+			}
+
+			&:active {
+				transform: scale(0.95);
+			}
+
+		}
+
+	}
+
+}
+#footer{
+	    position: fixed;
+    bottom: 0;
+    padding: 0.3rem;
+    background: black;
+    text-align:center;
+    color:white;
+    width: 100%;
+}
+
+@media screen and (max-width:780px) {
+	.posts {
+		.avatar {
+			img {
+				width: 10%;
+			}
+
+		}
+
+	}
+
+	#avatar {
+		width: 10% !important;
+	}
+	#box form input{
+		width:50%;
+	}
+	#home{
+	#intro{
+		display:flex;
+		flex-direction:column;
+		p{
+
+		}
+		img{
+			width:100%;
+		}
+	}
+}
+
+}
