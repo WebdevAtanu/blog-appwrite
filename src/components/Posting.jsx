@@ -1,5 +1,5 @@
 import React,{useState,useRef} from 'react';
-import {db} from './appwrite';
+import {db} from '../config/appwrite';
 import Fetching from './Fetching';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

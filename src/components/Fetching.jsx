@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {db} from './appwrite';
+import {db} from '../config/appwrite';
 
 function Fetching(prop) {
 	const [data,setData]=useState([]);
@@ -24,7 +24,6 @@ function Fetching(prop) {
 	}
 	return (
 		<>
-
 		{
 			flag?<div id='loader'><img src="loader.gif" alt=""/></div>:
 			<div id='postbox'>
@@ -46,7 +45,6 @@ function Fetching(prop) {
          }
 		</div>
 		}
-
 		</>
 	)
 }

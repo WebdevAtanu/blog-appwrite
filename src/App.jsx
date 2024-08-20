@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css';
-import Routing from './Routing';
+import Routing from './components/Routing';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,18 +11,18 @@ function App() {
     <>
       <Routing/>
       <ToastContainer
-position="top-center"
-autoClose={2000}
-hideProgressBar
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss={false}
-draggable
-pauseOnHover
-theme="dark"
-transition: Bounce
-/>
+      position="top-center"
+      autoClose={2000}
+      hideProgressBar
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss={false}
+      draggable
+      pauseOnHover
+      theme="dark"
+      transition: Bounce
+      />
     </>
   )
 }
