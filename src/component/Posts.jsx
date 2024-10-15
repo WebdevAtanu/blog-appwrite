@@ -22,7 +22,7 @@ function Posts(prop) {
     }, [prop.prop]);
 
   return (
-    <div className='grid md:grid-cols-4 gap-3 p-5'>
+    <div className='grid md:grid-cols-4 gap-3'>
       {data?.map((item, i) => (
       <Card data={item} key={i}/>
       ))}
