@@ -1,10 +1,10 @@
 import React,{useState,useRef} from 'react';
 import {db} from '../config/appwrite';
-import Fetching from './Fetching';
+import Posts from './Posts';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Posting() {
+function Editor() {
 	const [data,setData]=useState({});
 	const [render,setRender]=useState(0);
 	const ref1=useRef();
@@ -33,7 +33,7 @@ function Posting() {
 	}
 	return (
 		<div id='main'>
-		<Fetching prop={render}/>
+		<Posts prop={render}/>
 		<div id="box">
 		<form onSubmit={post}>
 		<input type="text" name='name' placeholder='Your name' maxLength="20" required onChange={setter} ref={ref1}/>
@@ -47,4 +47,4 @@ function Posting() {
 	)
 }
 
-export default Posting
+export default Editor
