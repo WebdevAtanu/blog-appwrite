@@ -3,6 +3,7 @@ import { db } from '../config/appwrite';
 import moment from 'moment';
 import Card from './daisy/Card';
 import Skeleton from './daisy/Skeleton';
+import Footer from './Footer';
 
 function Posts(prop) {
   const [data, setData] = useState([]);
@@ -22,12 +23,14 @@ function Posts(prop) {
     }, [prop.prop]);
 
   return (
+    <>
     <div className='grid md:grid-cols-4 gap-3'>
       {data?.map((item, i) => (
       <Card data={item} key={i}/>
       ))}
     </div>
-    
+    <Footer/>
+    </>
   );
 }
 

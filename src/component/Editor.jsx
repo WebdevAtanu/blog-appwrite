@@ -1,7 +1,7 @@
 import React,{useState,useRef} from 'react';
 import {db} from '../config/appwrite';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Footer from './Footer';
 
 function Editor() {
     const [data, setData] = useState({});
@@ -42,6 +42,7 @@ function Editor() {
 						</svg></button>
 					</form>
 				</div>
+                <Footer/>
 		</div>
 	)
 }
