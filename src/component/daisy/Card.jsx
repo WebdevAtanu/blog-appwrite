@@ -7,9 +7,10 @@ function Card(prop) {
     <div className="border border-gray-500 bg-base-100 flex flex-col justify-between">
       <figure>
         <img
-        src="https://www.littlethings.info/wp-content/uploads/2014/04/dummy-image-green-e1398449160839.jpg"
+        src="noimg.png"
         alt="image" />
       </figure>
+      <hr/>
       <div className="p-5 flex flex-col justify-between">
         <div className="flex items-center gap-3 mb-3">
           <Avatar image={'user.jpg'}/>

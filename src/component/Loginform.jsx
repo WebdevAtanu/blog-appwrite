@@ -1,16 +1,31 @@
+import {useContext} from 'react';
 import { useForm } from "react-hook-form";
+import {account} from '../config/appwrite';
+import { toast } from 'react-toastify';
+import Context from '../context/Context';
 
 export default function Loginform() {
+  const {flag,setFlag}=useContext(Context);
   const { register, handleSubmit,reset,formState: { errors } } = useForm();
   const onSubmit = data =>{
     console.log(data);
-    reset();
+    const promise=account.createEmailPasswordSession(data.mail,data.password);
+    promise.then(res=>{
+      toast.success('Login successful');
+      setFlag(true);
+      reset();
+    })
+    .catch(err=>{
+      toast.error('Login failed');
+      console.log(err);
+      setFlag(false);
+    });
   } 
    
   return (
     <div>
       <div className="flex justify-center items-center p-5">
-        <form onSubmit={handleSubmit(onSubmit)} className='border-black border flex flex-col md:w-1/4 w-full bg-gray-50 rounded'>
+        <form onSubmit={handleSubmit(onSubmit)} className='border-black border flex flex-col md:w-1/4 w-full bg-gray-50 rounded shadow-xl'>
           <div className="bg-slate-800 p-2 text-white text-center">User Login</div>
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1">
