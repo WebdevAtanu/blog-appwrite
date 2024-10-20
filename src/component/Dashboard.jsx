@@ -1,4 +1,4 @@
-import React,{useState,useRef,useContext} from 'react';
+import React,{useState,useRef,useContext,useEffect} from 'react';
 import {db,account} from '../config/appwrite';
 import { toast } from 'react-toastify';
 import Footer from './Footer';
@@ -7,6 +7,7 @@ import Context from '../context/Context';
 
 function Dashboard() {
     const {flag,setFlag}=useContext(Context);
+    const[user,setUser]=useState({});
     const editorRef = useRef(null);
     const post = async(e) => {
         toast.warning('Posting is under development');
@@ -36,8 +37,25 @@ function Dashboard() {
             console.error('No active session:', error.message);
         }
     }
+
+    const userDetails = async() => {
+        try {
+            const result = await account.get();
+            console.log('current user:', result);
+            setUser(result);
+            toast.success('Welcome ' + result.name);
+        } catch (error) {
+            console.error('No user:', error.message);
+        }
+    }
+
+    useEffect(() => {
+        userDetails();
+    }, [])
+    
     return (
         <div id='main'>
+        <h1>{user.name}</h1>
             <div className='text-end mb-3'>
                 <button onClick={logoutSession} className='btn btn-outline btn-error'>logout</button>
             </div>

@@ -3,7 +3,6 @@ import { db } from '../config/appwrite';
 import moment from 'moment';
 import Card from './daisy/Card';
 import Skeleton from './daisy/Skeleton';
-import Footer from './Footer';
 
 function Posts(prop) {
   const [data, setData] = useState([]);
@@ -29,7 +28,6 @@ function Posts(prop) {
       <Card data={item} key={i}/>
       ))}
     </div>
-    <Footer/>
     </>
   );
 }

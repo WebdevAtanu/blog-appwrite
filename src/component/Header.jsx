@@ -1,8 +1,8 @@
 import React,{useState,useContext,useEffect} from 'react';
 import Home from './Home';
-import Posts from './Posts';
 import User from './User'
 import Dashboard from './Dashboard';
+import About from './About';
 import Context from '../context/Context';
 
 function Header() {
@@ -20,19 +20,13 @@ function Header() {
     const handleChange = (e) => {
         setOption(e.target.value);
     }
+    
 	return (
+		<>
 	<div role="tablist" className="tabs tabs-lifted">
 		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="Home" value="home" checked={option==='home'} onChange={handleChange}/>
 		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
 			<Home/>
-		</div>
-		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="Posts" value="posts" checked={option==='posts'} onChange={handleChange}/>
-		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
-			<Posts/>
-		</div>
-		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="User" value="user" checked={option==='user'} onChange={handleChange}/>
-		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
-			<User/>
 		</div>
 		{
 		flag?
@@ -42,9 +36,20 @@ function Header() {
 				<Dashboard/>
 			</div>
 			</>
-		:null
-		}	
+		:
+		<>
+		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="User" value="user" checked={option==='user'} onChange={handleChange}/>
+		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
+			<User/>
+		</div>
+		</>
+		}
+		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="About" value="about" checked={option==='about'} onChange={handleChange}/>
+		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
+			<About/>
+		</div>	
 	</div>
+	</>
 	)
 }
 

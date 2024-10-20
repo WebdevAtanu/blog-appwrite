@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Avatar from './Avatar'
+import {Link} from 'react-router-dom';
 
 function Card(prop) {
   return (
@@ -8,7 +9,7 @@ function Card(prop) {
       <figure>
         <img
         src="noimg.png"
-        alt="image" />
+        alt="image" className='w-full aspect-video object-cover'/>
       </figure>
       <hr/>
       <div className="p-5 flex flex-col justify-between">
@@ -19,8 +20,8 @@ function Card(prop) {
             </div>
           </div>
           <p>{prop.data.post.slice(0,100)}...</p>
-          <div className="card-actions justify-end">
-            <button className="text-sm text-blue-900 hover:underline underline-offset-4">Explore More >></button>
+          <div className="card-actions mt-3 justify-end">
+            <Link to='/blogpost' state={prop.data}><p className="text-sm text-blue-900 hover:underline underline-offset-4">Explore More</p></Link>
           </div>
         </div>
       </div>
