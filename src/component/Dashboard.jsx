@@ -6,25 +6,30 @@ import { Editor } from '@tinymce/tinymce-react';
 import Context from '../context/Context';
 
 function Dashboard() {
-    const {flag,setFlag}=useContext(Context);
+    const {flag,setFlag,postcount,setPostcount}=useContext(Context);
     const[user,setUser]=useState({});
     const editorRef = useRef(null);
     const post = async(e) => {
-        toast.warning('Posting is under development');
-        // console.log(editorRef.current.getContent());
-        // try {
-        //     const response = await db.createDocument(
-        //         import.meta.env.VITE_DATABASE_ID,
-        //         import.meta.env.VITE_POST_ID,
-        //         'unique()',
-        //         editorRef.current.getContent()
-        //         
-        //     )
-        //     console.log(response);
-        //     toast.success('Post Added');
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        // toast.warning('Posting is under development');
+        console.log(editorRef.current.getContent());
+        try {
+            const response = await db.createDocument(
+                import.meta.env.VITE_DATABASE_ID,
+                import.meta.env.VITE_POST_ID,
+                'unique()',
+                {
+                    name:user.name,
+                    post:String(editorRef.current.getContent()),
+                    picture:'',
+                    userid:user.$id
+                }
+            )
+            await toast.success('Post Added');
+            await setPostcount(postcount+1);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const logoutSession = async() => {
@@ -41,9 +46,7 @@ function Dashboard() {
     const userDetails = async() => {
         try {
             const result = await account.get();
-            console.log('current user:', result);
             setUser(result);
-            toast.success('Welcome ' + result.name);
         } catch (error) {
             console.error('No user:', error.message);
         }
@@ -54,15 +57,24 @@ function Dashboard() {
     }, [])
     
     return (
-        <div id='main'>
-        <h1>{user.name}</h1>
-            <div className='text-end mb-3'>
-                <button onClick={logoutSession} className='btn btn-outline btn-error'>logout</button>
-            </div>
+        <div>
+        <div className="flex justify-between items-center px-5 mb-3">
+        <div className="flex gap-1 item-center bg-gray-200 px-3 py-1 rounded">
+            <i className="bi bi-person-hearts"></i>
+            <h1>{user.name}</h1>
+        </div>
+        <div className='bg-red-700 hover:bg-red-800 flex flex-col items-center p-1 text-white rounded-xl cursor-pointer' onClick={logoutSession}>
+            <i className="bi bi-power"></i>
+            <p className="text-xs">Logout</p>
+        </div>
+        </div>
+
             <Editor
             apiKey={import.meta.env.VITE_TINYMCE_API}
             onInit={(_evt, editor) => editorRef.current = editor}
-            initialValue="<p>This is the initial content of the editor.</p>"
+            initialValue="
+            <p>Write something awesome...</p>
+            "
             init={{
             height: 500,
             menubar: false,
@@ -79,7 +91,7 @@ function Dashboard() {
             }}
             />
             <div className="text-center mt-5">
-                <button onClick={post} className='border border-black p-1 mt-3 btn btn-outline'>Submit Post</button>
+                <button onClick={post} className='border-2 border-black p-1 mt-3 text-sm rounded bg-green-800 hover:bg-green-900 text-white px-3'>Submit Post</button>
             </div>
             <Footer/>
         </div>

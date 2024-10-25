@@ -2,6 +2,7 @@ import React from 'react';
 import Footer from './Footer';
 import Posts from './Posts';
 
+
 function Home() {
 	return (
 		<div className=''>

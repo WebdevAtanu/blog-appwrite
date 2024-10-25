@@ -1,5 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
+import parse from 'html-react-parser';
 
 function Blogpost() {
 	const location=useLocation();
@@ -7,7 +8,7 @@ function Blogpost() {
 	console.log(data);
 	return (
 		<div>
-			{data.post}
+			{parse(data.post)}
 		</div>
 	)
 }

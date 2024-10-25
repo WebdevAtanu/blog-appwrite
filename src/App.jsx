@@ -10,10 +10,10 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom';
 
 function App() {
   const [flag,setFlag]=useState(false);
+  const [postcount, setPostcount]=useState(0);
     const check = async() => {
         try {
             const session = await account.getSession('current');
-            console.log('Active session:', session);
             setFlag(true);
         } catch (error) {
             console.error('No active session:', error.message);
@@ -26,7 +26,7 @@ function App() {
   
   return (
     <>
-    <Context.Provider value={{flag,setFlag}}>
+    <Context.Provider value={{flag,setFlag,postcount,setPostcount}}>
     <BrowserRouter>
         <Routes>
             <Route path='/' element={<Header/>}/>

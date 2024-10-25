@@ -12,8 +12,8 @@ function Header() {
 		if(!flag){
 			setOption('home');
 		}
-		else {
-			setOption('dashboard');
+		else{
+			setOption('home');
 		}
 	},[flag]);
 	
@@ -27,6 +27,11 @@ function Header() {
 		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="Home" value="home" checked={option==='home'} onChange={handleChange}/>
 		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
 			<Home/>
+		</div>
+		
+		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="About" value="about" checked={option==='about'} onChange={handleChange}/>
+		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
+			<About/>
 		</div>
 		{
 		flag?
@@ -43,11 +48,7 @@ function Header() {
 			<User/>
 		</div>
 		</>
-		}
-		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="About" value="about" checked={option==='about'} onChange={handleChange}/>
-		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
-			<About/>
-		</div>	
+		}	
 	</div>
 	</>
 	)

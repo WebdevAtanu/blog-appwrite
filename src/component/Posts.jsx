@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { db } from '../config/appwrite';
 import moment from 'moment';
 import Card from './daisy/Card';
 import Skeleton from './daisy/Skeleton';
+import Context from '../context/Context';
+import { toast } from 'react-toastify';
 
-function Posts(prop) {
+function Posts() {
   const [data, setData] = useState([]);
+  const {postcount}=useContext(Context);
     useEffect(() => {
         const fetchData = async() => {
             try {
@@ -16,18 +19,25 @@ function Posts(prop) {
                 setData(response.documents);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                toast.error('Something went wrong! Server is not working');
             }
         };
         fetchData();
-    }, [prop.prop]);
+    }, [postcount]);
 
   return (
-    <>
+    <>{
+    data.length!=0?
     <div className='grid md:grid-cols-4 gap-3'>
-      {data?.map((item, i) => (
-      <Card data={item} key={i}/>
-      ))}
+        {data?.map((item, i) => (
+        <Card data={item} key={i}/>
+        ))}
     </div>
+    :
+    <div className="flex justify-center items-center mt-5 p-5">
+    <span className="loading loading-bars loading-lg"></span>    
+    </div>
+    }
     </>
   );
 }
