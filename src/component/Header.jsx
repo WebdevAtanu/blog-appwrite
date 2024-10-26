@@ -24,19 +24,15 @@ function Header() {
 	return (
 		<>
 	<div role="tablist" className="tabs tabs-lifted">
-		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="Home" value="home" checked={option==='home'} onChange={handleChange}/>
+		<input type="radio" name="my_tabs" role="tab" className="tab hover:text-blue-500" aria-label="Home" value="home" checked={option==='home'} onChange={handleChange}/>
 		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
 			<Home/>
 		</div>
 		
-		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="About" value="about" checked={option==='about'} onChange={handleChange}/>
-		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
-			<About/>
-		</div>
 		{
 		flag?
 			<>
-			<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="Dashboard" value="dashboard" checked={option==='dashboard'} onChange={handleChange}/>
+			<input type="radio" name="my_tabs" role="tab" className="tab hover:text-blue-500" aria-label="Dashboard" value="dashboard" checked={option==='dashboard'} onChange={handleChange}/>
 			<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
 				<Dashboard/>
 			</div>
@@ -49,6 +45,16 @@ function Header() {
 		</div>
 		</>
 		}	
+		
+		<input type="radio" name="my_tabs" role="tab" className="tab hover:text-blue-500" aria-label="About" value="about" checked={option==='about'} onChange={handleChange}/>
+		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
+			<About/>
+		</div>
+
+		<input type="radio" name="my_tabs" role="tab" className="tab hover:text-blue-500" aria-label="About" value="about" checked={option==='about'} onChange={handleChange}/>
+		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
+			<About/>
+		</div>
 	</div>
 	</>
 	)

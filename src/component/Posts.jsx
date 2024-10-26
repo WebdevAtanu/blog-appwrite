@@ -28,7 +28,7 @@ function Posts() {
   return (
     <>{
     data.length!=0?
-    <div className='grid md:grid-cols-4 gap-3'>
+    <div className='grid md:grid-cols-4 gap-3 mt-5'>
         {data?.map((item, i) => (
         <Card data={item} key={i}/>
         ))}

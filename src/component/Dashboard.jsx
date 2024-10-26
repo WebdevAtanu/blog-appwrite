@@ -61,11 +61,11 @@ function Dashboard() {
         <div className="flex justify-between items-center px-5 mb-3">
         <div className="flex gap-1 item-center bg-gray-200 px-3 py-1 rounded">
             <i className="bi bi-person-hearts"></i>
-            <h1>{user.name}</h1>
+            <p>{user.name}</p>
         </div>
-        <div className='bg-red-700 hover:bg-red-800 flex flex-col items-center p-1 text-white rounded-xl cursor-pointer' onClick={logoutSession}>
-            <i className="bi bi-power"></i>
-            <p className="text-xs">Logout</p>
+        <div className='bg-red-700 hover:bg-red-800 flex items-center gap-1 p-2 text-white rounded cursor-pointer' onClick={logoutSession}>
+            <i className="bi bi-power text-xs"></i>
+            <p className="text-xs">logout</p>
         </div>
         </div>
 
@@ -73,6 +73,7 @@ function Dashboard() {
             apiKey={import.meta.env.VITE_TINYMCE_API}
             onInit={(_evt, editor) => editorRef.current = editor}
             initialValue="
+            <h1>Post header</h1>
             <p>Write something awesome...</p>
             "
             init={{
@@ -91,7 +92,7 @@ function Dashboard() {
             }}
             />
             <div className="text-center mt-5">
-                <button onClick={post} className='border-2 border-black p-1 mt-3 text-sm rounded bg-green-800 hover:bg-green-900 text-white px-3'>Submit Post</button>
+                <button onClick={post} className='p-2 mt-3 text-sm rounded bg-blue-800 hover:bg-blue-900 text-white px-3'>Publish</button>
             </div>
             <Footer/>
         </div>

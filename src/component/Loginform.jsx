@@ -15,9 +15,10 @@ export default function Loginform() {
         promise.then(res => {
                 setFlag(true);
                 reset();
+                toast.success('welcome')
             })
             .catch(err => {
-                toast.error('Login failed');
+                toast.error('login failed- invalid crendential');
                 console.log(err);
                 setFlag(false);
                 setLoad(false);
@@ -34,16 +35,18 @@ export default function Loginform() {
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <div className='text-sm'>E-mail: {errors.mail && <span className='text-sm text-red-500'>E-mail is required</span>}</div>
-              <div><input type='email' {...register("mail", { required: true })} aria-invalid={errors.mail ? "true" : "false"}  className='border-black border p-1 w-full focus:outline outline-slate-500' placeholder='Lucifer@gmail.com'/></div>
+              <div><input type='email' {...register("mail", { required: true })} aria-invalid={errors.mail ? "true" : "false"}  className='border-black border p-1 w-full focus:outline outline-slate-500 rounded' placeholder='Lucifer@gmail.com'/></div>
             </div>
             <div className="flex flex-col gap-1">
               <div className='text-sm'>Password: {errors.password && <span className='text-sm text-red-500'>Enter your password</span>}</div>
-              <div><input type="password" {...register("password", { required: true })} className='border-black border p-1 focus:outline outline-slate-500 w-full' placeholder='******'/></div>
+              <div><input type="password" {...register("password", { required: true })} className='border-black border p-1 focus:outline outline-slate-500 w-full rounded' placeholder='******'/></div>
             </div>
+            <div className="text-center">
             {
-              load?<input type="submit" className='p-1 mt-3 btn btn-outline' value='Please wait...' disabled/>:
-              <input type="submit" className='border border-black p-1 mt-3 btn btn-outline' value='Log in'/>
+              load?<input type="submit" className='p-1 mt-3 text-sm rounded bg-gray-200 px-3' value='Please wait...' disabled/>:
+              <input type="submit" className='p-1 mt-3 text-sm rounded bg-blue-800 hover:bg-blue-900 text-white px-3 cursor-pointer' value='Log in'/>
             }
+            </div>
           </div>
         </form>
     </div>
