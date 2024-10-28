@@ -12,7 +12,7 @@ export default function Signupform() {
     setLoad(true);
     const promise=account.create(ID.unique(),data.mail,data.password,data.name);
     promise.then(res=>{
-      toast.success('Signup complete');
+      toast.success('Signup complete, you can login now');
       reset();
       setLoad(false);
     })

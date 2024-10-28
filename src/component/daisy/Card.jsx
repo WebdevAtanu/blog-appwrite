@@ -6,8 +6,8 @@ import parse from 'html-react-parser';
 
 function Card(prop) {
   return (
-    <Link to='/blogpost' state={prop.data}>
-    <div className="border border-gray-400 shadow flex flex-col justify-between">
+    <Link to='/blogpost' state={{ post: prop.post, index: prop.index }}>
+    <div className="border border-gray-400 shadow flex flex-col justify-between h-full hover:bg-gray-100 group">
       <div>
         <figure>
           <img src="default.jpg" alt="image" className='w-full aspect-video'/>
@@ -16,12 +16,15 @@ function Card(prop) {
           <div className="flex items-center gap-3 mb-3">
             <Avatar image={'user.jpg'}/>
               <div>
-                <p className="text-xs">Published by {prop.data.name}</p>
-                <p className="text-gray-500 text-xs">{moment(prop.data.$createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                <p className="text-xs">Published by {prop.post.name}</p>
+                <p className="text-gray-500 text-xs">{moment(prop.post.$createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
               </div>
             </div>
-            <div className='mt-1'>{parse(prop.data.post.slice(0,100))}</div>
+            <div className='mt-1'>{parse(prop.post.post.slice(0,100))}...</div>
           </div>
+        </div>
+        <div className="text-white group-hover:text-blue-500 text-end p-5 text-sm">
+        Read<i className="bi bi-chevron-double-right"></i>
         </div>
       </div>
       </Link>

@@ -11,6 +11,7 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom';
 function App() {
   const [flag,setFlag]=useState(false);
   const [postcount, setPostcount]=useState(0);
+  const [data, setData] = useState([]);
     const check = async() => {
         try {
             const session = await account.getSession('current');
@@ -26,7 +27,7 @@ function App() {
   
   return (
     <>
-    <Context.Provider value={{flag,setFlag,postcount,setPostcount}}>
+    <Context.Provider value={{flag,setFlag,postcount,setPostcount,data,setData}}>
     <BrowserRouter>
         <Routes>
             <Route path='/' element={<Header/>}/>

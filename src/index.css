@@ -4,6 +4,9 @@
 
 @layer base{
 	h1{
-		@apply text-3xl font-bold;
+		@apply text-xl font-bold;
+	}
+	h2,h3,h4,h5{
+		@apply my-3 font-bold;
 	}
 }

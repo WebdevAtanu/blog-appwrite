@@ -4,13 +4,17 @@ import { toast } from 'react-toastify';
 import Footer from './Footer';
 import { Editor } from '@tinymce/tinymce-react';
 import Context from '../context/Context';
+import moment from 'moment';
+import Avatar from './daisy/Avatar'
 
 function Dashboard() {
     const {flag,setFlag,postcount,setPostcount}=useContext(Context);
     const[user,setUser]=useState({});
+    const[flag1,setFlag1]=useState(false);
     const editorRef = useRef(null);
     const post = async(e) => {
         // toast.warning('Posting is under development');
+        setFlag1(true);
         console.log(editorRef.current.getContent());
         try {
             const response = await db.createDocument(
@@ -25,10 +29,12 @@ function Dashboard() {
                 }
             )
             await toast.success('Post Added');
+            setFlag1(false);
             await setPostcount(postcount+1);
             console.log(response);
         } catch (error) {
             console.error(error);
+            setFlag1(false);
         }
     }
 
@@ -57,18 +63,23 @@ function Dashboard() {
     }, [])
     
     return (
-        <div>
-        <div className="flex justify-between items-center px-5 mb-3">
-        <div className="flex gap-1 item-center bg-gray-200 px-3 py-1 rounded">
-            <i className="bi bi-person-hearts"></i>
-            <p>{user.name}</p>
+        <>
+        <div className='grid md:grid-cols-4 gap-3'>
+        <div className="flex md:justify-center md:col-span-1">
+        <div className="p-5 flex md:flex-col justify-between md:items-center items-start w-full bg-gray-100">
+        <div className="flex flex-col items-center">
+            <Avatar image='user.jpg'/>
+            <p className='mt-2'>{user.name}</p>
+            <p className='text-xs'>{user.email}</p>
+            <p className='text-xs'>{moment(user.$createdAt).format('Do MMMM,YYYY').toLowerCase()}</p>
         </div>
         <div className='bg-red-700 hover:bg-red-800 flex items-center gap-1 p-2 text-white rounded cursor-pointer' onClick={logoutSession}>
             <i className="bi bi-power text-xs"></i>
             <p className="text-xs">logout</p>
         </div>
         </div>
-
+        </div>
+        <div className="md:col-span-3 p-2">
             <Editor
             apiKey={import.meta.env.VITE_TINYMCE_API}
             onInit={(_evt, editor) => editorRef.current = editor}
@@ -92,10 +103,15 @@ function Dashboard() {
             }}
             />
             <div className="text-center mt-5">
-                <button onClick={post} className='p-2 mt-3 text-sm rounded bg-blue-800 hover:bg-blue-900 text-white px-3'>Publish</button>
+            {
+                flag1?<button className='p-2 mt-3 text-sm rounded bg-blue-800 hover:bg-blue-900 text-white px-3'>Publishing...</button>
+                :<button onClick={post} className='p-2 mt-3 text-sm rounded bg-blue-800 hover:bg-blue-900 text-white px-3'>Publish</button>
+            }
             </div>
-            <Footer/>
         </div>
+        </div>
+            <Footer/>
+        </>
 	)
 }
 
