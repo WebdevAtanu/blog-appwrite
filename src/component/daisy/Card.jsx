@@ -20,10 +20,10 @@ function Card(prop) {
                 <p className="text-gray-500 text-xs">{moment(prop.post.$createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
               </div>
             </div>
-            <div className='mt-1'>{parse(prop.post.post.slice(0,100))}...</div>
+            <h1 className='mt-1'>{prop.post.title}</h1>
           </div>
         </div>
-        <div className="text-white group-hover:text-blue-500 text-end p-5 text-sm">
+        <div className="text-grey-500 group-hover:text-black text-end px-5 pb-2 text-sm">
         Read<i className="bi bi-chevron-double-right"></i>
         </div>
       </div>

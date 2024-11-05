@@ -12,19 +12,17 @@ function Blogpost() {
 	const location=useLocation();
 	const {post,index}=location.state;
 	const {data}=useContext(Context);
-	console.log(post);
-	console.log(index);
 	useEffect(()=>{
 		scrollTo(0,0);
 	})
 	return (
 		<>
 		<div className='bg-gray-100'>
-			<div className="flex p-5 bg-white border-b mb-3">
+			<div className="flex p-3 bg-white border-b mb-3 sticky top-0 z-10">
 				<div className="breadcrumbs text-sm">
 					<ul>
 						<li><Link to='/'>Home</Link></li>
-						<li>Post ID:  {post.$id}</li>
+						<li>id: {post.$id}</li>
 					</ul>
 				</div>
 			</div>
@@ -39,13 +37,14 @@ function Blogpost() {
 							</div>
 						</div>
 						<div className='px-5'>
+							<h1 className='mb-3'>{post.title}</h1>
 							{parse(post.post)}
 						</div>
 					</div>
 					<div className="bg-white md:col-span-1 p-5">
 						<div>
 							<div>
-								<p className='mb-5'>See also</p>
+								<p className='mb-5 font-bold'>See also</p>
 								{
 								data.length!=index+1?
 								<div className='flex flex-col gap-3'>
