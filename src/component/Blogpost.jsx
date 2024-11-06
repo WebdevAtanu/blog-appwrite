@@ -11,7 +11,9 @@ import Card from './daisy/Card';
 function Blogpost() {
 	const location=useLocation();
 	const {post,index}=location.state;
+	console.log(index)
 	const {data}=useContext(Context);
+	console.log(data.length)
 	useEffect(()=>{
 		scrollTo(0,0);
 	})
@@ -46,19 +48,19 @@ function Blogpost() {
 							<div>
 								<p className='mb-5 font-bold'>See also</p>
 								{
-								data.length!=index+1?
-								<div className='flex flex-col gap-3'>
-									{data.slice(index+1,3)?.map((item, i) => (
-									<Card post={item} key={i}/>
-									))}
-								</div>
-								:
-							<div className="flex w-52 flex-col gap-4">
+								data.length==index+1?
+								<div className="flex w-52 flex-col gap-4">
 								<div className="skeleton h-32 w-full"></div>
 								<div className="skeleton h-4 w-28"></div>
 								<div className="skeleton h-4 w-full"></div>
 								<div className="skeleton h-4 w-full"></div>
-							</div>
+								</div>
+								:
+								<div className='flex flex-col gap-3'>
+									{data.slice(index+1,data.length+1).map((item, i) => (
+									<Card post={item} key={i}/>
+									))}
+								</div>
 								}
 							</div>
 						</div>

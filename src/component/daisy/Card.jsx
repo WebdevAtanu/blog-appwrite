@@ -7,7 +7,7 @@ import parse from 'html-react-parser';
 function Card(prop) {
   return (
     <Link to='/blogpost' state={{ post: prop.post, index: prop.index }}>
-    <div className="border border-gray-400 shadow flex flex-col justify-between h-full hover:bg-gray-100 group">
+    <div className="border border-gray-400 shadow flex flex-col justify-between h-full group">
       <div>
         <figure>
           <img src="default.jpg" alt="image" className='w-full aspect-video'/>
@@ -20,10 +20,10 @@ function Card(prop) {
                 <p className="text-gray-500 text-xs">{moment(prop.post.$createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
               </div>
             </div>
-            <h1 className='mt-1'>{prop.post.title}</h1>
+            <h1 className='group-hover:text-blue-800 mt-1'>{prop.post.title}</h1>
           </div>
         </div>
-        <div className="text-grey-500 group-hover:text-black text-end px-5 pb-2 text-sm">
+        <div className="text-grey-500 group-hover:text-blue-800 text-end px-5 pb-2 text-sm">
         Read<i className="bi bi-chevron-double-right"></i>
         </div>
       </div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
 	return (
-		<footer className="footer bg-slate-800 text-white p-5 mt-5">
+		<footer className="footer bg-slate-900 text-white p-5 mt-5">
 			<nav>
 				<h6 className="footer-title">Services</h6>
 				<a className="link link-hover">Branding</a>
@@ -25,10 +25,7 @@ function Footer() {
 			</nav>
 			<form>
 				<h6 className="footer-title">Newsletter</h6>
-				<fieldset className="form-control w-80">
-					<label className="label">
-						<span className="label-text">Enter your email address</span>
-					</label>
+				<fieldset className="form-control">
 					<div className="join">
 						<input
 						type="text"

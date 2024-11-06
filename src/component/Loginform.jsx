@@ -27,7 +27,7 @@ export default function Loginform() {
    
   return (
     <div className="flex justify-center items-center p-5">
-        <form onSubmit={handleSubmit(onSubmit)} className='border-black border flex flex-col md:w-1/2 w-full bg-gray-50 rounded drop-shadow-xl'>
+        <form onSubmit={handleSubmit(onSubmit)} className='border-black border flex flex-col w-full bg-gray-50 rounded drop-shadow-xl animate-scale'>
           <div className="bg-slate-800 p-2 text-white">
             <h4 className='text-xl'>Log in to your account</h4>
             <p className='text-[0.6rem] mt-3'>Enter your e-mail and password as login credentials.</p>
@@ -39,7 +39,7 @@ export default function Loginform() {
             </div>
             <div className="flex flex-col gap-1">
               <div className='text-sm'>Password: {errors.password && <span className='text-sm text-red-500'>Enter your password</span>}</div>
-              <div><input type="password" {...register("password", { required: true })} className='border-black border p-1 focus:outline outline-slate-500 w-full rounded' placeholder='******'/></div>
+              <div><input type="password" {...register("password", { required: true })} className='border-black border p-1 focus:outline outline-slate-500 w-full rounded' placeholder='********'/></div>
             </div>
             <div className="text-center">
             {

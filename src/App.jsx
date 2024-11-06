@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Context from './context/Context';
 import {account} from './config/appwrite';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import Alert from './component/daisy/Alert';
 
 function App() {
   const [flag,setFlag]=useState(false);
@@ -27,6 +28,7 @@ function App() {
   
   return (
     <>
+    <Alert/>
     <Context.Provider value={{flag,setFlag,postcount,setPostcount,data,setData}}>
     <BrowserRouter>
         <Routes>
