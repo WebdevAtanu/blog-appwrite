@@ -9,7 +9,6 @@ export default function Loginform() {
   const [load,setLoad]=useState(false);
   const { register, handleSubmit,reset,formState: { errors } } = useForm();
     const onSubmit = data => {
-        console.log(data);
         setLoad(true);
         const promise = account.createEmailPasswordSession(data.mail, data.password);
         promise.then(res => {
@@ -26,11 +25,10 @@ export default function Loginform() {
     }
    
   return (
-    <div className="flex justify-center items-center p-5">
-        <form onSubmit={handleSubmit(onSubmit)} className='border-black border flex flex-col w-full bg-gray-50 rounded drop-shadow-xl animate-scale'>
+        <form onSubmit={handleSubmit(onSubmit)} className='border flex flex-col w-full bg-gray-50 rounded shadow animate-scale'>
           <div className="bg-slate-800 p-2 text-white">
             <h4 className='text-xl'>Log in to your account</h4>
-            <p className='text-[0.6rem] mt-3'>Enter your e-mail and password as login credentials.</p>
+            <p className='text-xs'>Enter your e-mail and password as login credentials.</p>
           </div>
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1">
@@ -49,6 +47,5 @@ export default function Loginform() {
             </div>
           </div>
         </form>
-    </div>
   );
 }

@@ -39,7 +39,7 @@ function Header() {
 			</>
 		:
 		<>
-		<input type="radio" name="my_tabs" role="tab" className="tab" aria-label="User" value="user" checked={option==='user'} onChange={handleChange}/>
+		<input type="radio" name="my_tabs" role="tab" className="tab hover:text-blue-500" aria-label="User" value="user" checked={option==='user'} onChange={handleChange}/>
 		<div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-2">
 			<User/>
 		</div>

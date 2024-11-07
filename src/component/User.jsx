@@ -11,18 +11,22 @@ function User() {
 	return (
 		<div>{
 			flag?
-			<div className="flex justify-center items-center">
-				<div>
+			<div className="grid md:grid-cols-3 grid-cols-1 gap-5 p-5 mt-2">
+				<div className=""></div>
+				<div className=''>
 					<Signupform/>
-					<p className='text-center text-sm'>Back to <span className='text-blue-500 underline underline-offset-4 cursor-pointer' onClick={()=>setFlag(!flag)}>login</span></p>
+					<p className='text-center text-sm mt-2'>Back to <span className='text-blue-500 underline underline-offset-4 cursor-pointer' onClick={()=>setFlag(!flag)}>login</span></p>
 				</div>
+				<div className=""></div>
 			</div>
 			:
-			<div className="flex justify-center items-center">
-				<div>
+			<div className="grid md:grid-cols-3 grid-cols-1 gap-5 p-5 mt-2">
+				<div className=""></div>
+				<div className=''>
 					<Loginform/>
-					<p className='text-center text-sm'>New user? <span className='text-blue-500 underline underline-offset-4 cursor-pointer' onClick={()=>setFlag(!flag)}>signup now</span></p>
+					<p className='text-center text-sm mt-2'>New user? <span className='text-blue-500 underline underline-offset-4 cursor-pointer' onClick={()=>setFlag(!flag)}>signup now</span></p>
 				</div>
+				<div className=""></div>
 			</div>
 			}
 			<Footer/>

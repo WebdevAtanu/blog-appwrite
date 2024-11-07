@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import Avatar from './Avatar'
 import {Link} from 'react-router-dom';
-import parse from 'html-react-parser';
 
 function Card(prop) {
   return (
@@ -16,15 +15,12 @@ function Card(prop) {
           <div className="flex items-center gap-3 mb-3">
             <Avatar image={'user.jpg'}/>
               <div>
-                <p className="text-xs">Published by {prop.post.name}</p>
+                <p className="text-sm">Published by {prop.post.name}</p>
                 <p className="text-gray-500 text-xs">{moment(prop.post.$createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
               </div>
             </div>
             <h1 className='group-hover:text-blue-800 mt-1'>{prop.post.title}</h1>
           </div>
-        </div>
-        <div className="text-grey-500 group-hover:text-blue-800 text-end px-5 pb-2 text-sm">
-        Read<i className="bi bi-chevron-double-right"></i>
         </div>
       </div>
       </Link>

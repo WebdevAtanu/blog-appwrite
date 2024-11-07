@@ -168,8 +168,9 @@ function Dashboard() {
                                 <div className='p-3'>
                                     <p className='text-sm'><span className="font-bold">ID:</span> {item.$id}</p>
                                     <p className='text-sm'><span className="font-bold">Title:</span> {item.title}</p>
-                                    <div className='text-sm'><span className="font-bold">Post:</span> {item.post.slice(0,50)}...</div>
-                                    <p className='text-sm'><span className="font-bold">Created at:</span> {moment(item.$createdAt).format('Do MMMM,YYYY').toLowerCase()}</p>
+                                    <div className='text-sm'><span className="font-bold">Post:</span> {item.post.slice(0,100)}...</div>
+                                    <p className='text-sm'><span className="font-bold">Created at:</span> {moment(item.$createdAt).format('Do MMMM,YYYY, h:mm:ss a').toLowerCase()}</p>
+                                    <p className='text-sm'><span className="font-bold">Updated at:</span> {moment(item.$updatedAt).format('Do MMMM,YYYY, h:mm:ss a').toLowerCase()}</p>
                                 </div>
                                 <div className="flex gap-3 p-2">
                                     <button onClick={()=>handleEditor(item)} className='w-full bg-green-900 p-1 text-white hover:text-yellow-300 text-xl'><i className="bi bi-pencil"></i></button>

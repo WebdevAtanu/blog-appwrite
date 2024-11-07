@@ -22,11 +22,10 @@ export default function Signupform() {
             })
     }
   return (
-      <div className="flex justify-center items-center p-5">
-        <form onSubmit={handleSubmit(onSubmit)} className='border-black border flex flex-col w-full bg-gray-50 rounded drop-shadow-xl animate-scale'>
+        <form onSubmit={handleSubmit(onSubmit)} className='border flex flex-col w-full bg-gray-50 rounded shadow animate-scale'>
           <div className="bg-slate-800 p-2 text-white">
             <h4 className='text-xl'>Create your account</h4>
-            <p className='text-[0.6rem] mt-3'>By clicking “Sign up”, you agree to our terms of service and our privacy policy.</p>
+            <p className='text-xs'>By clicking “Sign up”, you agree to our terms of service and our privacy policy.</p>
           </div>
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1">
@@ -43,7 +42,7 @@ export default function Signupform() {
               value: 8,
               message: "Password is weak"
             }, })} className='border-black border p-1 focus:outline outline-slate-500 w-full rounded' placeholder='********'/></div>
-              <p className="text-[0.6rem]">Must contain 8+ characters, including at least 1 letter and 1 number.</p>
+              <p className="text-sm">Must contain 8+ characters, including at least 1 letter and 1 number.</p>
             </div>
             <div className="text-center">
             {
@@ -53,6 +52,5 @@ export default function Signupform() {
             </div>
           </div>
         </form>
-      </div>
   );
 }
