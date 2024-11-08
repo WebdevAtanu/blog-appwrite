@@ -1,5 +1,5 @@
 import React,{useState,useRef,useContext,useEffect} from 'react';
-import {db,account,Query} from '../config/appwrite';
+import {db,account,Query,storage} from '../config/appwrite';
 import { toast } from 'react-toastify';
 import Footer from './Footer';
 import { Editor } from '@tinymce/tinymce-react';
@@ -15,11 +15,12 @@ function Dashboard() {
     const[flag3,setFlag3]=useState(false);
     const editorRef = useRef(null);
     const titleRef = useRef();
+    const imageRef = useRef();
     const [data,setData]=useState([]);
     const [content,setContent]=useState();
     const [postDocument,setPostDocument]=useState();
 
-// =========================user posts=====================
+// =========================get user posts=====================
     const userPosts = async() => {
         setFlag2(true)
         try {
@@ -36,25 +37,37 @@ function Dashboard() {
 
 // =========================posting document=====================
     const createPost = async(e) => {
-        setFlag1(true);
-        try {
-            const response = await db.createDocument(
-                import.meta.env.VITE_DATABASE_ID,
-                import.meta.env.VITE_POST_ID,
-                'unique()', {
-                    name: user.name,
-                    post: String(editorRef.current.getContent()),
-                    picture: '',
-                    userid: user.$id,
-                    title: titleRef.current.value
-                }
-            )
-            await toast.success('Post Added');
-            setFlag1(false);
-            await setPostcount(postcount + 1);
-        } catch (error) {
-            console.error(error);
-            setFlag1(false);
+        let image = imageRef.current.files[0];
+        let title = titleRef.current.value;
+        if (image && title) {
+            setFlag1(true);
+            try {
+                const upload = await storage.createFile(
+                    import.meta.env.VITE_BUCKET_ID,
+                    'unique()',
+                    imageRef.current.files[0],
+                );
+                console.log(upload);
+                const response = await db.createDocument(
+                    import.meta.env.VITE_DATABASE_ID,
+                    import.meta.env.VITE_POST_ID,
+                    'unique()', {
+                        name: user.name,
+                        post: String(editorRef.current.getContent()),
+                        picture: upload.$id,
+                        userid: user.$id,
+                        title: title
+                    }
+                )
+                await toast.success('Post Added');
+                setFlag1(false);
+                await setPostcount(postcount + 1);
+            } catch (error) {
+                console.error(error);
+                setFlag1(false);
+            }
+        } else {
+            toast.error('post title and cover image are required')
         }
     }
 
@@ -70,7 +83,7 @@ function Dashboard() {
         }
     }
 
-// =========================user details=====================
+// =========================get user details=====================
     const userDetails = async() => {
         try {
             const result = await account.get();
@@ -142,13 +155,13 @@ function Dashboard() {
         <div className="flex md:col-span-1">
             <div className="p-5 flex flex-col bg-gray-100 w-full">
                 <ul className="menu bg-base-200 rounded-box">
-                    <li className='flex justify-center items-center'><a>
+                    <li className='flex justify-center items-center mb-5'><div className='text-white bg-slate-800 hover:bg-slate-800'>
                         <div className="flex flex-col items-center p-3">
                             <Avatar image='user.jpg'/>
                                 <p className='mt-2'>{user.name}</p>
                                 <p className='text-xs'>{user.email}</p>
                             </div>
-                        </a></li>
+                        </div></li>
                         <li onClick={()=>setFlag2(false)} className={`${flag2==false?'bg-slate-800 rounded text-white':null}`}><a>{flag3?'Update post':'Create post'}</a></li>
                         <li onClick={userPosts} className={`${flag2==true?'bg-slate-800 rounded text-white':null}`}><a>Your posts</a></li>
                         <li onClick={logoutSession} className='text-red-500'><a>Logout</a></li>
@@ -160,11 +173,14 @@ function Dashboard() {
             <div className="md:col-span-3 grid grid-cols-2 gap-2">
                 {
                     data.length==0?
+                        <div className='col-span-2 flex flex-col justify-center items-center gap-5'>
+                        <p>looking for posts</p>
                         <span className="loading loading-bars loading-lg"></span>
+                        </div>
                     :
                     data?.map((item,i)=>{
                         return(
-                            <div className='flex flex-col justify-between border border-black rounded overflow-auto' key={i}>
+                            <div className='flex flex-col justify-between border border-black rounded overflow-auto h-full ' key={i}>
                                 <div className='p-3'>
                                     <p className='text-sm'><span className="font-bold">ID:</span> {item.$id}</p>
                                     <p className='text-sm'><span className="font-bold">Title:</span> {item.title}</p>
@@ -183,7 +199,11 @@ function Dashboard() {
             </div>
             :
             <div className="md:col-span-3 p-2">
-            <input type="text" placeholder='Title of the post' ref={titleRef} className='border border-gray-500 p-1 w-full rounded mb-2'/>
+            <label className="input input-bordered flex items-center gap-2 mb-3">
+                Post title<input type="text" className="grow" ref={titleRef} required/>
+            </label>
+            <p className="text-sm mb-1">Select cover image for your post</p>
+            <input type="file" className="file-input file-input-bordered w-full mb-3" ref={imageRef} required/>
             <Editor
             apiKey={import.meta.env.VITE_TINYMCE_API}
             onInit={(_evt, editor) => editorRef.current = editor}

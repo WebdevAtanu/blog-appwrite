@@ -28,7 +28,7 @@ function Posts() {
     <>{
     data.length!=0?
         <div className='grid md:grid-cols-4 gap-3 mt-5'>
-            {data?.reverse().map((item, i) => (
+            {data?.map((item, i) => (
             <Card post={item} key={i} index={i}/>
             ))}
         </div>

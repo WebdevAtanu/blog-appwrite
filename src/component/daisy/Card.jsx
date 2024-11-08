@@ -2,14 +2,19 @@ import React from 'react';
 import moment from 'moment';
 import Avatar from './Avatar'
 import {Link} from 'react-router-dom';
+import { storage } from '../../config/appwrite';
 
 function Card(prop) {
+  const image = storage.getFileView(
+    import.meta.env.VITE_BUCKET_ID,
+    prop.post.picture
+);
   return (
-    <Link to='/blogpost' state={{ post: prop.post, index: prop.index }}>
+    <Link to='/blogpost' state={{ post: prop.post, index: prop.index,image:image }}>
     <div className="border border-gray-400 shadow flex flex-col justify-between h-full group">
       <div>
         <figure>
-          <img src="default.jpg" alt="image" className='w-full aspect-video'/>
+          <img src={image || "default.jpg"} alt="image" className='w-full aspect-video' />
         </figure>
         <div className="p-5 flex flex-col">
           <div className="flex items-center gap-3 mb-3">

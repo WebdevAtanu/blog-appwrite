@@ -11,7 +11,7 @@ import Stars from './daisy/Stars';
 
 function Blogpost() {
 	const location=useLocation();
-	const {post,index}=location.state;
+	const {post,index,image}=location.state;
 	const {data}=useContext(Context);
 	useEffect(()=>{
 		scrollTo(0,0);
@@ -33,7 +33,7 @@ function Blogpost() {
 
 			{/* main post */}
 				<div className="p-5 flex flex-col gap-5 bg-white md:col-span-3">
-					<img src="default.jpg" alt="" className='w-full h-1/6'/>
+					<img src={image} alt="" className='w-full h-1/6'/>
 					<div className="flex items-center gap-3 px-5">
 						<Avatar image={'user.jpg'}/>
 							<div>
