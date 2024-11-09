@@ -1,6 +1,6 @@
 import {useState,useEffect} from 'react';
 import { useForm } from "react-hook-form";
-import {account} from '../config/appwrite';
+import {account,OAuthProvider} from '../config/appwrite';
 import {ID} from 'appwrite';
 import { toast } from 'react-toastify';
 
@@ -21,6 +21,16 @@ export default function Signupform() {
                 setLoad(false);
             })
     }
+
+  // github auth
+    // const handleGoogleAuth = () => {
+    //         account.createOAuth2Session(
+    //             OAuthProvider.Github, // provider
+    //             'https://cloud.appwrite.io/v1/account/sessions/oauth2/callback/github/66ab07c80011a7742fc0', // redirect here on success
+    //             'http://localhost:5173', // redirect here on failure
+    //         );
+    // }
+
   return (
     <div className="hero bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -58,6 +68,7 @@ export default function Signupform() {
               }
             </div>
           </form>
+        {/* <p onClick={handleGoogleAuth}>signup with Github</p> */}
         </div>
       </div>
     </div>

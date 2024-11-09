@@ -13,8 +13,9 @@ function Dashboard() {
     const[flag1,setFlag1]=useState(false);
     const[flag2,setFlag2]=useState(false);
     const[flag3,setFlag3]=useState(false);
+    const[title,setTitle]=useState();
+    const[image,setImage]=useState('');
     const editorRef = useRef(null);
-    const titleRef = useRef();
     const imageRef = useRef();
     const [data,setData]=useState([]);
     const [content,setContent]=useState();
@@ -37,17 +38,14 @@ function Dashboard() {
 
 // =========================posting document=====================
     const createPost = async(e) => {
-        let image = imageRef.current.files[0];
-        let title = titleRef.current.value;
         if (image && title) {
             setFlag1(true);
             try {
                 const upload = await storage.createFile(
                     import.meta.env.VITE_BUCKET_ID,
                     'unique()',
-                    imageRef.current.files[0],
+                    image,
                 );
-                console.log(upload);
                 const response = await db.createDocument(
                     import.meta.env.VITE_DATABASE_ID,
                     import.meta.env.VITE_POST_ID,
@@ -61,13 +59,17 @@ function Dashboard() {
                 )
                 await toast.success('Post Added');
                 setFlag1(false);
+                setContent('');
+                setTitle('');
+                setImage('');
+                imageRef.current.value='';
                 await setPostcount(postcount + 1);
             } catch (error) {
                 console.error(error);
                 setFlag1(false);
             }
         } else {
-            toast.error('post title and cover image are required')
+            toast.warning('post title and cover image are required')
         }
     }
 
@@ -97,6 +99,7 @@ function Dashboard() {
     const handleEditor=(item)=>{
         setFlag2(false);
         setFlag3(true);
+        setTitle(item.title);
         setContent(item.post);
         setPostDocument(item);
     }
@@ -113,7 +116,8 @@ function Dashboard() {
                 import.meta.env.VITE_DATABASE_ID,
                 import.meta.env.VITE_POST_ID,
                 postDocument.$id,
-                {
+                {   
+                    title:title,
                     post: String(editorRef.current.getContent())
                 }
             )
@@ -121,6 +125,7 @@ function Dashboard() {
             setFlag1(false);
             await setPostcount(postcount + 1);
             setContent('');
+            setTitle('');
             setFlag3(!flag3);
         } catch (error) {
             console.error(error);
@@ -129,15 +134,16 @@ function Dashboard() {
     }
 
 // =========================delete post=====================
-    const handleDelete=async(item) => {
-        console.log(item);
+    const handleDelete=async(item,i) => {
         try {
             const response = await db.deleteDocument(
                 import.meta.env.VITE_DATABASE_ID,
                 import.meta.env.VITE_POST_ID,
                 item.$id
             )
+            userPosts();
             await toast.success('Post Deleted');
+            await setPostcount(postcount + 1);
         } catch (error) {
             console.error(error);
         }
@@ -170,7 +176,7 @@ function Dashboard() {
             </div>
         {
             flag2?
-            <div className="md:col-span-3 grid grid-cols-2 gap-2">
+            <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-5">
                 {
                     data.length==0?
                         <div className='col-span-2 flex flex-col justify-center items-center gap-5'>
@@ -182,6 +188,7 @@ function Dashboard() {
                         return(
                             <div className='flex flex-col justify-between border border-black rounded overflow-auto h-full ' key={i}>
                                 <div className='p-3'>
+                                    <p>Post no. {i+1}</p>
                                     <p className='text-sm'><span className="font-bold">ID:</span> {item.$id}</p>
                                     <p className='text-sm'><span className="font-bold">Title:</span> {item.title}</p>
                                     <div className='text-sm'><span className="font-bold">Post:</span> {item.post.slice(0,100)}...</div>
@@ -189,8 +196,8 @@ function Dashboard() {
                                     <p className='text-sm'><span className="font-bold">Updated at:</span> {moment(item.$updatedAt).format('Do MMMM,YYYY, h:mm:ss a').toLowerCase()}</p>
                                 </div>
                                 <div className="flex gap-3 p-2">
-                                    <button onClick={()=>handleEditor(item)} className='w-full bg-green-900 p-1 text-white hover:text-yellow-300 text-xl'><i className="bi bi-pencil"></i></button>
-                                    <button onClick={()=>handleDelete(item)} className='w-full bg-red-900 p-1 text-white hover:text-yellow-300 text-xl'><i className="bi bi-trash"></i></button>   
+                                    <button onClick={()=>handleEditor(item)} className='w-full hover:bg-green-700 p-1 border border-black hover:text-white text-xl'><i className="bi bi-pencil"></i></button>
+                                    <button onClick={()=>handleDelete(item,i)} className='w-full hover:bg-red-700 p-1 border border-black hover:text-white text-xl'><i className="bi bi-trash"></i></button>   
                                 </div>
                             </div>
                             )
@@ -200,10 +207,10 @@ function Dashboard() {
             :
             <div className="md:col-span-3 p-2">
             <label className="input input-bordered flex items-center gap-2 mb-3">
-                Post title<input type="text" className="grow" ref={titleRef} required/>
+                Post title<input type="text" className="grow" value={title} onChange={e=>setTitle(e.target.value)} required/>
             </label>
             <p className="text-sm mb-1">Select cover image for your post</p>
-            <input type="file" className="file-input file-input-bordered w-full mb-3" ref={imageRef} required/>
+            <input type="file" className="file-input file-input-bordered w-full mb-3" ref={imageRef} onChange={e=>setImage(e.target.files[0])} required/>
             <Editor
             apiKey={import.meta.env.VITE_TINYMCE_API}
             onInit={(_evt, editor) => editorRef.current = editor}
