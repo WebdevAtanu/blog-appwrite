@@ -7,7 +7,8 @@ import Context from '../context/Context';
 export default function Loginform() {
   const {flag,setFlag}=useContext(Context);
   const [load,setLoad]=useState(false);
-  const { register, handleSubmit,reset,formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  
     const onSubmit = data => {
         setLoad(true);
         const promise = account.createEmailPasswordSession(data.mail, data.password);

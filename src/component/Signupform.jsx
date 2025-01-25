@@ -1,34 +1,39 @@
-import {useState,useEffect} from 'react';
+import {useState,useContext,useEffect} from 'react';
 import { useForm } from "react-hook-form";
 import {account,OAuthProvider} from '../config/appwrite';
 import {ID} from 'appwrite';
 import { toast } from 'react-toastify';
-
+import Context from '../context/Context';
 
 export default function Signupform() {
   const [load,setLoad]=useState(false);
-  const { register, handleSubmit,reset,formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const {flag,setFlag}=useContext(Context);
+
     const onSubmit = data => {
         setLoad(true);
         const promise = account.create(ID.unique(), data.mail, data.password, data.name);
         promise.then(res => {
-                toast.success('Signup complete, you can login now');
-                reset();
-                setLoad(false);
+                let promise = account.createEmailPasswordSession(data.mail, data.password);
+                promise.then(res => {
+                    toast.success('welcome '+ data.name);
+                    setFlag(true);
+                })
             })
             .catch(err => {
                 toast.error('Signup failed');
                 setLoad(false);
+                setFlag(false);
             })
     }
 
-  // github auth
+    // github auth
     // const handleGoogleAuth = () => {
-    //         account.createOAuth2Session(
-    //             OAuthProvider.Github, // provider
-    //             'https://cloud.appwrite.io/v1/account/sessions/oauth2/callback/github/66ab07c80011a7742fc0', // redirect here on success
-    //             'http://localhost:5173', // redirect here on failure
-    //         );
+    //     account.createOAuth2Session(
+    //         OAuthProvider.Github, // provider
+    //         'https://cloud.appwrite.io/v1/account/sessions/oauth2/callback/github/66ab07c80011a7742fc0', // redirect here on success
+    //         'http://localhost:5173', // redirect here on failure
+    //     );
     // }
 
   return (
@@ -68,7 +73,6 @@ export default function Signupform() {
               }
             </div>
           </form>
-        {/* <p onClick={handleGoogleAuth}>signup with Github</p> */}
         </div>
       </div>
     </div>

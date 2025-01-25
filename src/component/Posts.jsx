@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 
 function Posts() {
   const {postcount,data,setData}=useContext(Context);
+
     const fetchData = async() => {
         try {
             const response = await db.listDocuments(
@@ -20,12 +21,14 @@ function Posts() {
             toast.error('Something went wrong! Server is not working');
         }
     }
+
     useEffect(() => {
         fetchData();
     }, [postcount]);
 
   return (
-    <>{
+    <>
+    {
     data.length!=0?
         <div className='grid md:grid-cols-4 gap-3 mt-5'>
             {data?.map((item, i) => (

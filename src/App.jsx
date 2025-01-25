@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react';
 import './App.css'
-import Header from './component/Header';
+import Navigation from './component/Navigation';
 import Blogpost from './component/Blogpost';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Context from './context/Context';
 import {account} from './config/appwrite';
@@ -13,17 +13,16 @@ function App() {
   const [flag,setFlag]=useState(false);
   const [postcount, setPostcount]=useState(0);
   const [data, setData] = useState([]);
-    const check = async() => {
+    const checkUserLog = async() => {
         try {
             const session = await account.getSession('current');
             setFlag(true);
         } catch (error) {
-            console.error('No active session:', error.message);
             setFlag(false);
         }
     }
     useEffect(() => {
-        check();
+        checkUserLog();
     }, [flag])
   
   return (
@@ -32,11 +31,12 @@ function App() {
     <Context.Provider value={{flag,setFlag,postcount,setPostcount,data,setData}}>
     <BrowserRouter>
         <Routes>
-            <Route path='/' element={<Header/>}/>
+            <Route path='/' element={<Navigation/>}/>
             <Route path='/blogpost' element={<Blogpost/>}/>
         </Routes>
     </BrowserRouter>
     </Context.Provider>
+    
     <ToastContainer
       position="top-center"
       autoClose={2000}

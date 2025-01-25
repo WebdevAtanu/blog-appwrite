@@ -13,12 +13,13 @@ function Dashboard() {
     const[flag1,setFlag1]=useState(false);
     const[flag2,setFlag2]=useState(false);
     const[flag3,setFlag3]=useState(false);
-    const[title,setTitle]=useState();
+    const[title,setTitle]=useState('');
     const[image,setImage]=useState('');
     const editorRef = useRef(null);
     const imageRef = useRef();
     const [data,setData]=useState([]);
-    const [content,setContent]=useState();
+    const [nopost,setNopost]= useState('');
+    const [content,setContent]=useState('');
     const [postDocument,setPostDocument]=useState();
 
 // =========================get user posts=====================
@@ -29,7 +30,13 @@ function Dashboard() {
                 import.meta.env.VITE_DATABASE_ID,
                 import.meta.env.VITE_POST_ID, [Query.equal('userid', user.$id)]
             );
-            setData(response.documents);
+            if (response.documents.length == 0) {
+                setTimeout(() => {
+                    setNopost('No post found');
+                }, 5000)
+            } else {
+                setData(response.documents);
+            }
         } catch (error) {
             console.error('Error fetching data:', error);
             toast.error('Something went wrong! Server is not working');
@@ -62,7 +69,7 @@ function Dashboard() {
                 setContent('');
                 setTitle('');
                 setImage('');
-                imageRef.current.value='';
+                imageRef.current.value = '';
                 await setPostcount(postcount + 1);
             } catch (error) {
                 console.error(error);
@@ -77,9 +84,8 @@ function Dashboard() {
     const logoutSession = async() => {
         try {
             const session = await account.deleteSession('current');
-            console.log('delete session:', session);
             setFlag(false);
-            toast.warning('User Logged out')
+            toast.warning('You are Logged out')
         } catch (error) {
             console.error('No active session:', error.message);
         }
@@ -96,7 +102,7 @@ function Dashboard() {
     }
 
 // =========================post editor=====================
-    const handleEditor=(item)=>{
+    const handleEditor = (item) => {
         setFlag2(false);
         setFlag3(true);
         setTitle(item.title);
@@ -105,19 +111,18 @@ function Dashboard() {
     }
 
     const handleEditorChange = (content) => {
-    setContent(content);
+        setContent(content);
     };
 
 // =========================update post=====================
-    const updatePost=async(e) => {
+    const updatePost = async(e) => {
         setFlag1(true);
         try {
             const response = await db.updateDocument(
                 import.meta.env.VITE_DATABASE_ID,
                 import.meta.env.VITE_POST_ID,
-                postDocument.$id,
-                {   
-                    title:title,
+                postDocument.$id, {
+                    title: title,
                     post: String(editorRef.current.getContent())
                 }
             )
@@ -134,16 +139,20 @@ function Dashboard() {
     }
 
 // =========================delete post=====================
-    const handleDelete=async(item,i) => {
+    const handleDelete = async(item, i) => {
         try {
-            const response = await db.deleteDocument(
+            await db.deleteDocument(
                 import.meta.env.VITE_DATABASE_ID,
                 import.meta.env.VITE_POST_ID,
                 item.$id
             )
-            userPosts();
+            await storage.deleteFile(
+                import.meta.env.VITE_BUCKET_ID,
+                item.picture
+            );
             await toast.success('Post Deleted');
             await setPostcount(postcount + 1);
+            userPosts();
         } catch (error) {
             console.error(error);
         }
@@ -176,19 +185,26 @@ function Dashboard() {
             </div>
         {
             flag2?
-            <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-5">
                 {
                     data.length==0?
-                        <div className='col-span-2 flex flex-col justify-center items-center gap-5'>
-                        <p>looking for posts</p>
+                        <div className='col-span-3 flex flex-col justify-center items-center gap-5'>
+                        {
+                           (nopost=='')?
+                           <>
+                           <p>looking for posts</p>
                         <span className="loading loading-bars loading-lg"></span>
+                        </>
+                           :
+                           <p>{nopost}</p>
+                        }
                         </div>
                     :
                     data?.map((item,i)=>{
                         return(
                             <div className='flex flex-col justify-between border border-black rounded overflow-auto h-full ' key={i}>
+                                    <img src={storage.getFileView(import.meta.env.VITE_BUCKET_ID,item.picture)} alt="picture" className='w-full aspect-video'/>
                                 <div className='p-3'>
-                                    <p>Post no. {i+1}</p>
                                     <p className='text-sm'><span className="font-bold">ID:</span> {item.$id}</p>
                                     <p className='text-sm'><span className="font-bold">Title:</span> {item.title}</p>
                                     <div className='text-sm'><span className="font-bold">Post:</span> {item.post.slice(0,100)}...</div>

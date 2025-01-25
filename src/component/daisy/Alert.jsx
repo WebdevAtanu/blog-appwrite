@@ -11,8 +11,8 @@ function Alert() {
 				<form method="dialog">
 					<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 				</form>
-				<h3 className="font-bold">Hey there!!</h3>
-				<p className="py-2">This project is incomplete right now. I am currently working on it.</p>
+				<h3 className="font-bold">Hey there, welcome to Techdown !!</h3>
+				<p className="py-2">This blog project is using <a href="https://appwrite.io/" target='_blank' className='link link-primary'>Appwrite</a> services.</p>
 			</div>
 			</dialog>
 		</div>

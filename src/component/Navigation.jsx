@@ -5,7 +5,7 @@ import Dashboard from './Dashboard';
 import About from './About';
 import Context from '../context/Context';
 
-function Header() {
+function Navigation() {
 	const {flag,setFlag}=useContext(Context);
 	const[option,setOption]=useState();
 	useEffect(()=>{
@@ -55,4 +55,4 @@ function Header() {
 	)
 }
 
-export default Header
+export default Navigation

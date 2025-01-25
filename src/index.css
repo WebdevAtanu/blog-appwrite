@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-	h1{
+@layer base {
+	h1 {
 		@apply text-lg font-bold;
 	}
-	h2,h3,h4,h5{
+
+	h2, h3, h4, h5 {
 		@apply my-3 font-bold;
 	}
+
 }
