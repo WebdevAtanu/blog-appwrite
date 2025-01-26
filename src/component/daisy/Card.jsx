@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import Avatar from './Avatar'
 import {Link} from 'react-router-dom';
-import { storage } from '../../config/appwrite';
+import { storage,db } from '../../config/appwrite';
 
 function Card(prop) {
   const image = storage.getFileView(
@@ -10,7 +10,7 @@ function Card(prop) {
     prop.post.picture
 );
   return (
-    <Link to='/blogpost' state={{ post: prop.post, index: prop.index,image:image }}>
+    <Link to='/blogpost' state={{ id: prop.post.$id, pictureId: prop.post.picture, index: prop.index }}>
     <div className="border border-gray-400 shadow flex flex-col justify-between h-full group">
       <div>
         <figure>

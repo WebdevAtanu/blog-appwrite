@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 import './App.css'
 import Navigation from './component/Navigation';
 import Blogpost from './component/Blogpost';
+import Footer from './component/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Context from './context/Context';
@@ -36,6 +37,7 @@ function App() {
         </Routes>
     </BrowserRouter>
     </Context.Provider>
+    <Footer/>
     
     <ToastContainer
       position="top-center"

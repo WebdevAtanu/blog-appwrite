@@ -21,7 +21,6 @@ function Home() {
 				<li><a>Top</a></li>
 			</ul>
 			<Posts/>
-			<Footer/>
 		</div>
 	)
 }

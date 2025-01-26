@@ -1,7 +1,6 @@
 import React,{useState,useRef,useContext,useEffect} from 'react';
 import {db,account,Query,storage} from '../config/appwrite';
 import { toast } from 'react-toastify';
-import Footer from './Footer';
 import { Editor } from '@tinymce/tinymce-react';
 import Context from '../context/Context';
 import moment from 'moment';
@@ -152,7 +151,7 @@ function Dashboard() {
             );
             await toast.success('Post Deleted');
             await setPostcount(postcount + 1);
-            userPosts();
+            await userPosts();
         } catch (error) {
             console.error(error);
         }
@@ -167,21 +166,20 @@ function Dashboard() {
     return (
         <>
         <div className='grid md:grid-cols-4 gap-3'>
-        <div className="flex md:col-span-1">
-            <div className="p-5 flex flex-col bg-gray-100 w-full">
-                <ul className="menu bg-base-200 rounded-box">
-                    <li className='flex justify-center items-center mb-5'><div className='text-white bg-slate-800 hover:bg-slate-800'>
-                        <div className="flex flex-col items-center p-3">
-                            <Avatar image='user.jpg'/>
-                                <p className='mt-2'>{user.name}</p>
-                                <p className='text-xs'>{user.email}</p>
-                            </div>
-                        </div></li>
-                        <li onClick={()=>setFlag2(false)} className={`${flag2==false?'bg-slate-800 rounded text-white':null}`}><a>{flag3?'Update post':'Create post'}</a></li>
-                        <li onClick={userPosts} className={`${flag2==true?'bg-slate-800 rounded text-white':null}`}><a>Your posts</a></li>
-                        <li onClick={logoutSession} className='text-red-500'><a>Logout</a></li>
-                    </ul>
+        {/* avatar box */}
+            <div className="p-5 flex flex-col bg-gray-100 w-full md:h-screen">
+                <div className='flex items-center justify-center'>
+                    <div className="text-white flex flex-col bg-slate-800 items-center px-8 py-3 rounded">
+                        <Avatar image='user.jpg'/>
+                        <p className='mt-2'>{user.name}</p>
+                        <p className='text-xs'>{user.email}</p>
+                    </div>
                 </div>
+                <ul className="menu bg-base-200 rounded-box">
+                    <li onClick={()=>setFlag2(false)} className={`${flag2==false?'bg-slate-800 rounded-lg text-white':null}`}><a><i className="bi bi-pen"></i> {flag3?'Update post':'Create post'}</a></li>
+                    <li onClick={userPosts} className={`${flag2==true?'bg-slate-800 rounded-lg text-white':null}`}><a><i className="bi bi-files"></i> Your posts</a></li>
+                    <li onClick={logoutSession} className='text-red-500'><a><i className="bi bi-box-arrow-left"></i>Logout</a></li>
+                </ul>
             </div>
         {
             flag2?
@@ -196,24 +194,23 @@ function Dashboard() {
                         <span className="loading loading-bars loading-lg"></span>
                         </>
                            :
-                           <p>{nopost}</p>
+                           <p className='text-lg'>{nopost}</p>
                         }
                         </div>
                     :
                     data?.map((item,i)=>{
                         return(
-                            <div className='flex flex-col justify-between border border-black rounded overflow-auto h-full ' key={i}>
-                                    <img src={storage.getFileView(import.meta.env.VITE_BUCKET_ID,item.picture)} alt="picture" className='w-full aspect-video'/>
+                            <div className='h-fit flex flex-col justify-between border border-black rounded overflow-auto' key={i}>
+                                <img src={storage.getFileView(import.meta.env.VITE_BUCKET_ID,item.picture)} alt="picture" className='w-full aspect-video'/>
                                 <div className='p-3'>
                                     <p className='text-sm'><span className="font-bold">ID:</span> {item.$id}</p>
                                     <p className='text-sm'><span className="font-bold">Title:</span> {item.title}</p>
-                                    <div className='text-sm'><span className="font-bold">Post:</span> {item.post.slice(0,100)}...</div>
                                     <p className='text-sm'><span className="font-bold">Created at:</span> {moment(item.$createdAt).format('Do MMMM,YYYY, h:mm:ss a').toLowerCase()}</p>
                                     <p className='text-sm'><span className="font-bold">Updated at:</span> {moment(item.$updatedAt).format('Do MMMM,YYYY, h:mm:ss a').toLowerCase()}</p>
                                 </div>
                                 <div className="flex gap-3 p-2">
-                                    <button onClick={()=>handleEditor(item)} className='w-full hover:bg-green-700 p-1 border border-black hover:text-white text-xl'><i className="bi bi-pencil"></i></button>
-                                    <button onClick={()=>handleDelete(item,i)} className='w-full hover:bg-red-700 p-1 border border-black hover:text-white text-xl'><i className="bi bi-trash"></i></button>   
+                                    <button onClick={()=>handleEditor(item)} className='w-full bg-green-600 hover:bg-green-700 p-1 text-white text-sm rounded'><i className="bi bi-pencil"></i></button>
+                                    <button onClick={()=>handleDelete(item,i)} className='w-full bg-red-600 hover:bg-red-700 p-1 text-white text-sm rounded'><i className="bi bi-trash"></i></button>   
                                 </div>
                             </div>
                             )
@@ -266,7 +263,6 @@ function Dashboard() {
         </div>
         }
         </div>
-            <Footer/>
         </>
 	)
 }

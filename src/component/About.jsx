@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from './Footer';
 
 function About() {
 	return (
@@ -14,7 +13,6 @@ function About() {
         <img src="blog.jpg" className="md:w-1/2 w-full rounded-lg shadow-2xl m-auto"/>
       </div>
     </div>
-    <Footer/>
 </>
 	)
 }

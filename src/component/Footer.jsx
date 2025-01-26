@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
 	return (
-		<footer className="grid grid-cols-2 md:grid-cols-3 gap-5 bg-slate-900 text-white p-5 mt-5">
+		<footer className="grid grid-cols-2 md:grid-cols-4 gap-2 bg-slate-900 text-white p-5 mt-5">
 			<nav className='flex flex-col'>
 				<h6 className="footer-title">Services</h6>
 				<a className="link link-hover">Branding</a>
@@ -19,6 +19,12 @@ function Footer() {
 			</nav>
 			<nav className='flex flex-col'>
 				<h6 className="footer-title">Legal</h6>
+				<a className="link link-hover">Terms of use</a>
+				<a className="link link-hover">Privacy policy</a>
+				<a className="link link-hover">Cookie policy</a>
+			</nav>
+			<nav className='flex flex-col'>
+				<h6 className="footer-title">T&C</h6>
 				<a className="link link-hover">Terms of use</a>
 				<a className="link link-hover">Privacy policy</a>
 				<a className="link link-hover">Cookie policy</a>
